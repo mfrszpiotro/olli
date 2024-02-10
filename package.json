@@ -1,0 +1,30 @@
+{
+  "name": "process_ollie_viewer",
+  "version": "0.0.1",
+  "description": "Viewer application for github.com/mfrszpiotro/process_ollie project results",
+  "main": "build/src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy-data-view": "copyfiles src/*.html build && copyfiles src/*.css build",
+    "compile": "tsc && npm run copy-data-view",
+    "start": "npm run compile && electron .",
+    "package": "electron-forge package",
+    "make": "npm run compile && electron-forge make"
+  },
+  "author": "mfrszpiotro (Marcel)",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "copyfiles": "^2.4.1",
+    "electron": "^28.1.3",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}
