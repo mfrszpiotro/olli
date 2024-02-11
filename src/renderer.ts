@@ -1,5 +1,4 @@
 const information = document.getElementById('versions-information') as HTMLParagraphElement
-const percentageBarDiv = document.getElementById('percentage-bars') as HTMLDivElement
 
 // @ts-ignore
 information.innerText = `This app is using (besides ${versions.test}): Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`
@@ -10,6 +9,7 @@ const pingPongTest = async () => {
     const response: string = await versions.ping()
     console.log(`And window (renderer) receives "${response}" from the main process which handles the "ping" IPC message.`)
 }
+
 
 function createPercentageCircle(percentage: number): HTMLDivElement {
     const percentageCircle = document.createElement('div')
@@ -43,7 +43,44 @@ function insertHtmlPlotIntoElement(elementId: string, filepath: string) {
         `<object class="plot" type="text/html" data="${filepath}"></object>`
 }
 
+//todo: figure out exporting interfaces (and overall electron-ts project structure)
+interface HowClose {
+    absolute: number,
+    absolute_percent: number,
+    is_negative: boolean,
+    context: string,
+}
+
+interface TimeTwoEventsComparison {
+    diff_name: string,
+    event_a_name: string,
+    event_b_name: string,
+    time_diff_commit: number,
+    time_diff_reference: number,
+    how_close: HowClose,
+    diff_description: string
+}
+
+const appendTestComparisonTable = async () => {
+    // @ts-ignore
+    const comparison: TimeTwoEventsComparison = versions.testComparison
+    const table = document.createElement('table')
+    const row = document.createElement('tr')
+    const dataLeft = document.createElement('td')
+    dataLeft.innerText = comparison.event_a_name
+    row.appendChild(dataLeft)
+    const dataRight = document.createElement('td')
+    dataRight.innerText = comparison.event_b_name
+    row.appendChild(dataRight)
+    table.appendChild(row)
+    comparisonTablesDiv.appendChild(table)
+}
+
+const percentageBarsDiv = document.getElementById('percentage-bars') as HTMLDivElement
+const comparisonTablesDiv = document.getElementById("comparison-tables") as HTMLDivElement
+
 pingPongTest()
-appendPercentageCircle(percentageBarDiv)
+appendPercentageCircle(percentageBarsDiv)
 insertHtmlPlotIntoElement("rising-plot", "./process_ollie/DynamicTimeWarp_Rising_crotch_angle_smooth.html")
 insertHtmlPlotIntoElement("falling-plot", "./process_ollie/DynamicTimeWarp_Falling_crotch_angle_smooth.html")
+appendTestComparisonTable()

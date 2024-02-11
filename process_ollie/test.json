@@ -1,0 +1,14 @@
+{
+    "diff_name": "TimeTwoEvents",
+    "event_a_name": "BackLiftOff",
+    "event_b_name": "FrontLiftOff",
+    "time_diff_commit": 0.133,
+    "time_diff_reference": 0.0,
+    "how_close": {
+        "absolute": 0.133,
+        "absolute_percent": null,
+        "is_negative": false,
+        "context": "commit_time_diff - reference_time_diff"
+    },
+    "diff_description": "A time difference between two events is calculated for each Ollie performance (commit and reference). \nThen those time differences are compared to determine how close the both intervals are, \nand in which direction the next commit should be taken.\n"
+}
