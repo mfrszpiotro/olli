@@ -1,5 +1,5 @@
 # Transpiled ts to js and other built sources
-build/src
+build/
 
 # Logs
 logs
