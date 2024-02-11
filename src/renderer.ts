@@ -38,5 +38,12 @@ function appendPercentageCircle(targetDiv: HTMLDivElement) {
     targetDiv.appendChild(circle)
 }
 
+function insertHtmlPlotIntoElement(elementId: string, filepath: string) {
+    document.getElementById(elementId)!.innerHTML =
+        `<object class="plot" type="text/html" data="${filepath}"></object>`
+}
+
 pingPongTest()
 appendPercentageCircle(percentageBarDiv)
+insertHtmlPlotIntoElement("rising-plot", "./process_ollie/DynamicTimeWarp_Rising_crotch_angle_smooth.html")
+insertHtmlPlotIntoElement("falling-plot", "./process_ollie/DynamicTimeWarp_Falling_crotch_angle_smooth.html")
