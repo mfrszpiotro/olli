@@ -1,12 +1,12 @@
 const information = document.getElementById('versions-information') as HTMLParagraphElement
 
 // @ts-ignore
-information.innerText = `This app is using (besides ${versions.test}): Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`
+information.innerText = `This app is using (besides ${testCustomApi.test}): Chrome (v${testCustomApi.chrome()}), Node.js (v${testCustomApi.node()}), and Electron (v${testCustomApi.electron()})`
 
 const pingPongTest = async () => {
     console.log('Window (renderer) sends "ping" through exposed function ping()...')
     // @ts-ignore
-    const response: string = await versions.ping()
+    const response: string = await testCustomApi.ping()
     console.log(`And window (renderer) receives "${response}" from the main process which handles the "ping" IPC message.`)
 }
 
@@ -63,7 +63,7 @@ interface TimeTwoEventsComparison {
 
 const appendTestComparisonTable = async () => {
     // @ts-ignore
-    const comparison: TimeTwoEventsComparison = versions.testComparison
+    const comparison: TimeTwoEventsComparison = testCustomApi.testComparison
     const table = document.createElement('table')
     const row = document.createElement('tr')
     const dataLeft = document.createElement('td')

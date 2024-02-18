@@ -1,4 +1,5 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { ipcRenderer } from 'electron'
+//import { contextBridge } from 'electron'
 
 const testVariable: string = 'testPreloadVariable'
 
@@ -21,11 +22,15 @@ interface TimeTwoEventsComparison {
 
 let testComp: TimeTwoEventsComparison = require('../../process_ollie/test.json');
 
-contextBridge.exposeInMainWorld('versions', {
+const customApi = {
     node: () => process.versions.node,
     chrome: () => process.versions.chrome,
     electron: () => process.versions.electron,
     test: testVariable,
     ping: () => ipcRenderer.invoke('ping'),
     testComparison: testComp,
-})
+}
+
+//contextBridge.exposeInMainWorld('versions', customApi)
+//@ts-ignore
+window.testCustomApi = customApi
