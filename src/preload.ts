@@ -1,28 +1,21 @@
 import { ipcRenderer } from 'electron'
-//import { contextBridge } from 'electron'
+import { TimeTwoEventsComparison } from './data_interfaces/time_two_events_comparison'
 
 const testVariable: string = 'testPreloadVariable'
 
-interface HowClose {
-    absolute: number,
-    absolute_percent: number,
-    is_negative: boolean,
-    context: string,
+const testComp: TimeTwoEventsComparison = require('../../process_ollie/test.json');
+
+export interface CustomApi {
+    node: () => string,
+    chrome: () => string,
+    electron: () => string,
+    test: string,
+    ping: () => Promise<any>,
+    testComparison: TimeTwoEventsComparison
 }
 
-interface TimeTwoEventsComparison {
-    diff_name: string,
-    event_a_name: string,
-    event_b_name: string,
-    time_diff_commit: number,
-    time_diff_reference: number,
-    how_close: HowClose,
-    diff_description: string
-}
-
-let testComp: TimeTwoEventsComparison = require('../../process_ollie/test.json');
-
-const customApi = {
+let customApi = {} as CustomApi
+customApi = {
     node: () => process.versions.node,
     chrome: () => process.versions.chrome,
     electron: () => process.versions.electron,
@@ -31,6 +24,6 @@ const customApi = {
     testComparison: testComp,
 }
 
-//contextBridge.exposeInMainWorld('versions', customApi)
 //@ts-ignore
 window.testCustomApi = customApi
+

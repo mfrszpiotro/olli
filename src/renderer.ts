@@ -1,12 +1,16 @@
+import { TimeTwoEventsComparison } from "./data_interfaces/time_two_events_comparison"
+import { CustomApi } from "./preload"
+
 const information = document.getElementById('versions-information') as HTMLParagraphElement
 
 // @ts-ignore
-information.innerText = `This app is using (besides ${testCustomApi.test}): Chrome (v${testCustomApi.chrome()}), Node.js (v${testCustomApi.node()}), and Electron (v${testCustomApi.electron()})`
+let preloadedApi = testCustomApi as CustomApi
+
+information.innerText = `This app is using (besides ${preloadedApi.test}): Chrome (v${preloadedApi.chrome()}), Node.js (v${preloadedApi.node()}), and Electron (v${preloadedApi.electron()})`
 
 const pingPongTest = async () => {
     console.log('Window (renderer) sends "ping" through exposed function ping()...')
-    // @ts-ignore
-    const response: string = await testCustomApi.ping()
+    const response: string = await preloadedApi.ping()
     console.log(`And window (renderer) receives "${response}" from the main process which handles the "ping" IPC message.`)
 }
 
@@ -43,27 +47,8 @@ function insertHtmlPlotIntoElement(elementId: string, filepath: string) {
         `<object class="plot" type="text/html" data="${filepath}"></object>`
 }
 
-//todo: figure out exporting interfaces (and overall electron-ts project structure)
-interface HowClose {
-    absolute: number,
-    absolute_percent: number,
-    is_negative: boolean,
-    context: string,
-}
-
-interface TimeTwoEventsComparison {
-    diff_name: string,
-    event_a_name: string,
-    event_b_name: string,
-    time_diff_commit: number,
-    time_diff_reference: number,
-    how_close: HowClose,
-    diff_description: string
-}
-
 const appendTestComparisonTable = async () => {
-    // @ts-ignore
-    const comparison: TimeTwoEventsComparison = testCustomApi.testComparison
+    const comparison: TimeTwoEventsComparison = preloadedApi.testComparison
     const table = document.createElement('table')
     const row = document.createElement('tr')
     const dataLeft = document.createElement('td')
